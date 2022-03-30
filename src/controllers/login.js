@@ -29,21 +29,25 @@ const varifyOTP = async (req, res) => {
         const { email, otp } = req.body;
         const { results = [] } = await sqlQuery(`SELECT otp, created FROM Session WHERE email = ?`, [email]);
         const sentOtp = results[0].otp;
+        /*
+        // OTP Timer section [ 10 mins ]
         const timestamp = results[0].created;
-        const timeLeft = 1 - Math.floor((Date.now() - timestamp) / 60000);
-        console.log(timeLeft);
+        const timeLeft = 10 - Math.floor((Date.now() - timestamp) / 60000);
         if (timeLeft <= 0) {
             return res.status(400).send('OTP Expired');
         }
+        */
         if (sentOtp == otp) {
-            const { results } = await sqlQuery(`SELECT uid FROM Users WHERE email = ?`, [email]);
+            const { results } = await sqlQuery(`SELECT uid, type FROM Users WHERE email = ?`, [email]);
             let uid = uuidV4();
+            let type = 'student';
             if (results.length == 0) {
-                await sqlQuery(`INSERT INTO Users VALUES ( ?, ? )`, [uid, email]);
+                await sqlQuery(`INSERT INTO Users VALUES ( ?, ?, ? )`, [uid, email, 'student']);
             } else {
                 uid = results[0].uid;
+                type = results[0].type;
             }
-            const token = jsonwebtoken.sign({ uid }, process.env.JWT_KEY);
+            const token = jsonwebtoken.sign({ type, uid }, process.env.JWT_KEY);
             return res.status(200).send({ token });
         } else {
             return res.status(400).send('Otp mismatch');
@@ -55,3 +59,17 @@ const varifyOTP = async (req, res) => {
 };
 
 module.exports = { requestOTP, varifyOTP };
+
+/*
+admin
+{
+    "email": "subrataemail1999@gmail.com",
+    "otp": 275957
+}
+
+student
+{
+    "email": "subratabiswasofficial@gmail.com",
+    "otp": 927479
+}
+*/
