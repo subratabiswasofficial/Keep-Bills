@@ -1,0 +1,13 @@
+{
+    "swaggerDefinition": {
+        "info":{
+            "title":"Test Api",
+            "description": "test dec",
+            "contact":{
+                "name":"Hakur"
+            },
+            "servers":["http://localhost:5000"]
+        }
+    },
+    "apis":["server.js"]
+}
