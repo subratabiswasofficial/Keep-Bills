@@ -1,8 +1,8 @@
 /*
-    1> create profile
-    2> edit profile
+    1> create, update profile // done
+    2> get profile // done
     3> fill the bill
-    4> delete form
+    4> delete form 
 */
 
 const Student = require('../models/Student');
