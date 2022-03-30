@@ -1,2 +1,4 @@
 const loginRouter = require('./login');
-module.exports = { loginRouter };
+const studentRouter = require('./student');
+
+module.exports = { loginRouter, studentRouter };

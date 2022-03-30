@@ -1,3 +1,4 @@
-const { requestOTP, varifyOTP } = require('./login');
-const authController = { requestOTP, varifyOTP };
-module.exports = { authController };
+const authController = require('./login');
+const studentController = require('./student');
+
+module.exports = { authController, studentController };
