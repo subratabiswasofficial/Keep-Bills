@@ -1,11 +1,4 @@
-/*
-    1> create, update profile // done
-    2> get profile // done
-    3> fill the bill
-    4> delete form 
-*/
-
-const Student = require('../models/Student');
+const { Student } = require('../models');
 
 const createOrUpdateProfile = async (req, res) => {
     try {

@@ -1,0 +1,231 @@
+{
+	"info": {
+		"_postman_id": "de3ea504-5bb1-4a93-b8ac-4f10b48d6e3e",
+		"name": "Keep Bills",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Students",
+			"item": [
+				{
+					"name": "Profile",
+					"item": [
+						{
+							"name": "Create Or Update",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoic3R1ZGVudCIsInVpZCI6IjE1M2I5YjM0LWJjZDYtNGRhYi05MjUyLWNiOTlkZDA3NzhiMSIsImlhdCI6MTY0ODYyMTAyNn0.TLZhiHlmq5vtpG_X54ZrvMV-VJ-11h092VKxifXpgRg",
+										"description": "Student Token",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"subrata biswas\",\r\n    \"roll\": 18101105043,\r\n    \"department\": \"cse\",\r\n    \"semester\":8\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/student/profile",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"student",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoic3R1ZGVudCIsInVpZCI6IjE1M2I5YjM0LWJjZDYtNGRhYi05MjUyLWNiOTlkZDA3NzhiMSIsImlhdCI6MTY0ODYyMTAyNn0.TLZhiHlmq5vtpG_X54ZrvMV-VJ-11h092VKxifXpgRg",
+										"description": "Student Token",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:5000/api/student/profile",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"student",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Bills",
+					"item": [
+						{
+							"name": "Create Bill",
+							"request": {
+								"method": "POST",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Bill",
+							"request": {
+								"method": "DELETE",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": []
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "OTP Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"subratabiswasofficial@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/login-request-otp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"login-request-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OTP Varify",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"subrataemail1999@gmail.com\",\r\n    \"otp\": 275957\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/login-varify-otp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"login-varify-otp"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWRtaW4iLCJ1aWQiOiI0ZjE0ZWE5ZC0yMTUxLTQ0ZGQtYmRkOS02NjJiNGJlNDkzZDAiLCJpYXQiOjE2NDg2MjI0OTF9.mWfQQL4w40haWUr4m7jSzAMnzrqIUYsCs1Cjv5hdvQc",
+								"description": "Admin token",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoic3R1ZGVudCIsInVpZCI6IjE1M2I5YjM0LWJjZDYtNGRhYi05MjUyLWNiOTlkZDA3NzhiMSIsImlhdCI6MTY0ODYyMTAyNn0.TLZhiHlmq5vtpG_X54ZrvMV-VJ-11h092VKxifXpgRg",
+								"description": "Student Token",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/student/test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"student",
+								"test"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

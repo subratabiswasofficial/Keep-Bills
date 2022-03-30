@@ -1,13 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-const { student } = require('../auth/index');
+const auth = require('../auth');
 const { studentController } = require('../controllers');
 
-router.get('/test', student, (req, res) => {
-    res.send('student test');
-});
+/**
+ * @swagger
+ * /profile:
+ *   get:
+ *     description: Noise
+ */
+router.get('/profile', auth.student, studentController.getProfile);
 
-router.route('/profile').get(student, studentController.getProfile).post(student, studentController.createOrUpdateProfile);
+router.post('/profile', auth.student, studentController.createOrUpdateProfile);
 
 module.exports = router;

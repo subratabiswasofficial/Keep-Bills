@@ -17,8 +17,19 @@ connctDb();
 // };
 // testFx();
 
-/*
- */
+// const Bill = require('./models/Bill');
+// const bill = new Bill({ uid: '153b9b34-bcd6-4dab-9252-cb99dd0778b1', amount: 12340, ref: 'upi 123456' });
+// bill.save();
+// const testFx = async () => {
+//     const bills = await Bill.getBillsByRoll(18101105043);
+//     console.log(bills);
+// };
+// testFx();
+
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const specs = swaggerJsdoc(require('./swagger.json'));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 const { loginRouter, studentRouter } = require('./routers');
 app.use('/api', loginRouter);

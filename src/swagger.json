@@ -1,13 +1,13 @@
 {
     "swaggerDefinition": {
         "info":{
-            "title":"Test Api",
-            "description": "test dec",
+            "title":"Keep Bills",
+            "description": "All about apis",
+            "version":"1.0.0",
             "contact":{
-                "name":"Hakur"
-            },
-            "servers":["http://localhost:5000"]
+                "name":"Subrata Biswas"
+            }
         }
     },
-    "apis":["server.js"]
+    "apis":["./src/routers/*.js"]
 }

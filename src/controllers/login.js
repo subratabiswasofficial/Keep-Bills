@@ -1,23 +1,10 @@
-const jsonwebtoken = require('jsonwebtoken');
-const { v4: uuidV4 } = require('uuid');
-const { sqlQuery } = require('../db/mysql');
-const { sendEmail } = require('../services/email-sender');
-
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+const { Session, User } = require('../models');
 
 const requestOTP = async (req, res) => {
     try {
         const { email } = req.body;
-        const otp = getRandomInt(100000, 999999);
-        const timestamp = Date.now();
-        await sqlQuery('DELETE FROM Session WHERE email = ?', [email]);
-        await sqlQuery(`INSERT INTO Session VALUES ( ?, ?, ? )`, [email, otp, timestamp]);
-        sendEmail(email, `<p>Your OTP is <strong>${otp}</strong></p>`, 'OTP Varification', true);
-        return res.status(200).send('ok');
+        Session.sendOtpToEmail(email);
+        return res.status(200).send('OTP has been sent to your email. Valid for 10 min');
     } catch (error) {
         console.log(error);
         return res.status(500).send('Internal Server Error');
@@ -27,31 +14,17 @@ const requestOTP = async (req, res) => {
 const varifyOTP = async (req, res) => {
     try {
         const { email, otp } = req.body;
-        const { results = [] } = await sqlQuery(`SELECT otp, created FROM Session WHERE email = ?`, [email]);
-        const sentOtp = results[0].otp;
-        /*
-        // OTP Timer section [ 10 mins ]
-        const timestamp = results[0].created;
-        const timeLeft = 10 - Math.floor((Date.now() - timestamp) / 60000);
-        if (timeLeft <= 0) {
-            return res.status(400).send('OTP Expired');
+        const otpStatus = await Session.varifyOtp(email, otp, 100000);
+        if (otpStatus.valid == false) {
+            return res.status(400).send('OTP expired. Try Again');
         }
-        */
-        if (sentOtp == otp) {
-            const { results } = await sqlQuery(`SELECT uid, type FROM Users WHERE email = ?`, [email]);
-            let uid = uuidV4();
-            let type = 'student';
-            if (results.length == 0) {
-                await sqlQuery(`INSERT INTO Users VALUES ( ?, ?, ? )`, [uid, email, 'student']);
-            } else {
-                uid = results[0].uid;
-                type = results[0].type;
-            }
-            const token = jsonwebtoken.sign({ type, uid }, process.env.JWT_KEY);
-            return res.status(200).send({ token });
-        } else {
-            return res.status(400).send('Otp mismatch');
+        if (otpStatus.matched == true) {
+            const user = new User(email);
+            await user.createOrUpdate();
+            const token = user.genJwtAndType();
+            return res.status(200).json(token);
         }
+        return res.status(400).send('OTP mismatched. Try again');
     } catch (error) {
         console.log(error);
         return res.status(500).send('Internal Server Error');
@@ -61,6 +34,7 @@ const varifyOTP = async (req, res) => {
 module.exports = { requestOTP, varifyOTP };
 
 /*
+
 admin
 {
     "email": "subrataemail1999@gmail.com",
@@ -70,6 +44,7 @@ admin
 student
 {
     "email": "subratabiswasofficial@gmail.com",
-    "otp": 927479
+    "otp": 554760
 }
+
 */
