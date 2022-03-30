@@ -8,7 +8,8 @@
     "format": "prettier --write ./src",
     "client": "npm start --prefix client",
     "server": "nodemon src/server",
-    "dev": "concurrently \"npm run server\"  \"npm run client\""
+    "dev": "concurrently \"npm run server\"  \"npm run client\"",
+    "design": "live-server design/index.html"
   },
   "repository": {
     "type": "git",
