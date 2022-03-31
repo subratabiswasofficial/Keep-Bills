@@ -35,6 +35,14 @@ const { loginRouter, studentRouter } = require('./routers');
 app.use('/api', loginRouter);
 app.use('/api/student', studentRouter);
 
+//==========SERVE STATIC FILES==========
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '..', 'design', 'login.html'));
+    });
+}
+
 app.listen(process.env.PORT || 5000, () => {
     console.log(`App is running on port ${process.env.PORT || 5000}`);
 });
