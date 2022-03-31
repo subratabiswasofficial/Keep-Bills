@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const { connctDb } = require('./db/mysql');
-
+const path = require('path');
 app.use(express.json());
 connctDb();
 
@@ -37,7 +37,7 @@ app.use('/api/student', studentRouter);
 
 //==========SERVE STATIC FILES==========
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'));
+    app.use(express.static('design'));
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, '..', 'design', 'login.html'));
     });
