@@ -9,7 +9,7 @@
     "client": "npm start --prefix client",
     "server": "nodemon src/server",
     "dev": "concurrently \"npm run server\"  \"npm run client\"",
-    "design": "live-server design/index.html"
+    "design": "live-server ./design"
   },
   "repository": {
     "type": "git",

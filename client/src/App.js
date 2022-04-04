@@ -1,8 +1,13 @@
+import React from 'react';
+import Login from './pages/Login';
+import Navbar from './layouts/Navbar';
+
 function App() {
     return (
-        <div className="App">
-            <h1>hello Bitch</h1>
-        </div>
+        <>
+            <Navbar />
+            <Login />
+        </>
     );
 }
 

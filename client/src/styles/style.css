@@ -5,9 +5,14 @@
 }
 
 body {
+    /* background-color: red; */
     width: 100%;
     height: 100vh;
     background-color: #fff;
+}
+
+button{
+    cursor: pointer;
 }
 
 header {
@@ -66,6 +71,7 @@ section {
 .content {
     height: 100%;
     margin: 0 auto;
+    /* background-color: green; */
     max-width: 1000px;
 }
 
@@ -156,13 +162,10 @@ section {
 .form-area .field:first-child input {
     margin-bottom: 20px;
 }
-.form-area .field:last-child input {
+/* .form-area .field:last-child input {
     background-color: #e2dcdc;
-}
-
-/* .submit-area {
-
 } */
+
 
 .submit-area button {
     height: 50px;
@@ -268,18 +271,26 @@ section {
     overflow-x: hidden;
     overflow-y: auto;
 }
-
+/* */
+.search-rows p {
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    border-color: #959595;
+}
+.search-rows p:last-child {
+    border-style: none;
+}
 .search-rows::-webkit-scrollbar {
     display: none;
 }
-
+/* */
 .search-rows h1:nth-child(odd) {
     background-color: yellow;
 }
 
 .table-head {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 2fr;
 }
 
 .table-head p {
@@ -303,9 +314,9 @@ section {
 
 .data-row {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 2fr 1fr;
-    /* border-style: solid; */
-    /* border-width: 0 0 1px 0; */
+    grid-template-columns: 1fr 1fr 1fr 2fr;
+    border-style: solid;
+    border-width: 0 0 1px 0;
     border-color: #959595;
 }
 .data-row p {
@@ -317,10 +328,10 @@ section {
     font-family: 'Ubuntu', sans-serif;
     font-size: 18px;
     font-weight: 500;
-    color: black;
+    color: #8d8d8d;
 }
 
-.data-row .screenshot {
+.data-row p:last-child {
     color: #059999;
     text-decoration: underline;
 }
@@ -330,38 +341,6 @@ section {
 }
 .data-row:nth-child(odd) {
     background-color: #e7e5e5;
-}
-
-.action-cell{
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
-    justify-items: center;
-}
-
-.approved{
-    background-color: #00800063 !important;
-}
-.declined{
-    background-color: #eb232357 !important;
-}
-
-.action-cell img{
-    width: 25px;
-    background-color: #fff;
-    border-radius: 50%;
-}
-
-.accepted{
-    color: green !important;
-}
-.rejected{
-    color: red !important;
-}
-.pending{
-    color: blue !important;
 }
 
 input:focus {
