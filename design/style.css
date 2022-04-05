@@ -8,6 +8,7 @@ body {
     width: 100%;
     height: 100vh;
     background-color: #fff;
+    position: relative;
 }
 
 header {
@@ -83,11 +84,10 @@ section {
 }
 
 .caption {
-    text-shadow: 1px 3px 6px rgba(0, 0, 0, 0.50);
+    text-shadow: 1px 3px 6px rgba(0, 0, 0, 0.5);
     font-family: 'Aleo', serif;
     color: #fff;
     position: relative;
-
 }
 
 .cp-1 {
@@ -245,6 +245,7 @@ section {
     border-radius: 0 2px 2px 0;
     cursor: pointer;
 }
+
 .search-button:active {
     background-color: #056999;
 }
@@ -270,9 +271,33 @@ section {
     overflow-y: auto;
 }
 
-.search-rows::-webkit-scrollbar {
-    display: none;
+/* custome scroll bar */
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
 }
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #fff;
+    /* box-shadow: inset 0 0 5px grey;  */
+    /* border-radius: 10px; */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+/* no scroll bar */
+/* .search-rows::-webkit-scrollbar {
+    display: none;
+} */
 
 .search-rows h1:nth-child(odd) {
     background-color: yellow;
@@ -280,7 +305,7 @@ section {
 
 .table-head {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 2fr 1.1fr;
 }
 
 .table-head p {
@@ -304,7 +329,7 @@ section {
 
 .data-row {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 2fr 1.1fr;
     /* border-style: solid; */
     /* border-width: 0 0 1px 0; */
     border-color: #959595;
@@ -333,7 +358,7 @@ section {
     background-color: #e7e5e5;
 }
 
-.action-cell{
+.action-cell {
     width: 100%;
     height: 100%;
     display: grid;
@@ -342,29 +367,42 @@ section {
     justify-items: center;
 }
 
-.approved{
+.approved {
     background-color: #00800063 !important;
 }
-.declined{
+.declined {
     background-color: #eb232357 !important;
 }
 
-.action-cell img{
-    width: 25px;
-    background-color: #fff;
-    border-radius: 50%;
+.action-cell button {
+    border: none;
+    background-color: inherit;
+}
+.action-cell button:active {
+    transform: scale(1.2);
 }
 
-.accepted{
+.action-cell button:nth-child(1) img {
+    width: 25px;
+}
+.action-cell button:nth-child(2) img {
+    margin-top: 8px;
+    width: 25px;
+}
+
+.action-cell button:nth-child(3) img {
+    width: 20px;
+}
+
+.accepted {
     color: green !important;
 }
-.rejected{
+.rejected {
     color: red !important;
 }
-.pending{
+.pending {
     color: blue !important;
 }
-
 
 .page-nav {
     margin: 0 auto;
@@ -405,7 +443,7 @@ section {
 }
 
 /* student bill form */
-.form-holder{
+.form-holder {
     width: 100%;
     /* background-color: white; */
     top: 200px;
@@ -414,7 +452,7 @@ section {
     justify-content: center;
 }
 
-.form-frame{
+.form-frame {
     width: 580px;
     background-color: #ececec;
     padding: 20px 40px 30px 40px;
@@ -423,7 +461,7 @@ section {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
-.bill-form-heading{
+.bill-form-heading {
     grid-column: 1 / span 2;
     text-align: center;
     font-weight: 700;
@@ -432,7 +470,7 @@ section {
     margin: 10px 0;
 }
 
-.bill-form-field{
+.bill-form-field {
     display: grid;
     grid-template-columns: 2fr 3fr;
     width: 100%;
@@ -441,11 +479,11 @@ section {
     align-items: center;
     /* position: absolute; */
 }
-.bill-form-submit{
+.bill-form-submit {
     /* background-color: yellow; */
     text-align: center;
 }
-.bill-form-submit button{
+.bill-form-submit button {
     font-family: 'Ubuntu', sans-serif;
     width: 120px;
     height: 50px;
@@ -458,12 +496,12 @@ section {
     font-size: 17px;
 }
 
-.bill-form-field .label{
+.bill-form-field .label {
     text-align: end;
     margin-right: 20px;
 }
 
-.bill-form-field input{
+.bill-form-field input {
     background-color: #f7f4f4;
     border-radius: 2px;
     border: solid 1px #949393;
@@ -475,7 +513,7 @@ section {
     height: 45px;
 }
 
-.file-upload-button{
+.file-upload-button {
     background-color: #f7f4f4;
     border-radius: 2px;
     border: solid 1px #949393;
@@ -487,14 +525,13 @@ section {
     position: relative;
 }
 
-.file-upload-button .internal-labal{
-
+.file-upload-button .internal-labal {
     position: absolute;
     top: 12px;
     left: 20px;
 }
 
-.file-upload-button .external-labal{
+.file-upload-button .external-labal {
     position: absolute;
     top: 0;
     right: 0;
@@ -508,6 +545,209 @@ section {
     border-style: solid;
 }
 
+/* student profile page */
+.profile-frame {
+    width: 100%;
+    padding-top: 200px;
+    /* background-color: #fff; */
+    display: flex;
+    justify-content: center;
+}
+
+.profile-form {
+    /* height: 400px; */
+    width: 500px;
+    background-color: #ececec;
+    font-family: 'Ubuntu', sans-serif;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+    padding: 0 40px 30px 40px;
+}
+
+.avatar-holder {
+    width: 100%;
+    height: 100px;
+    margin-top: -65px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 65px;
+}
+
+.avatar {
+    height: 130px;
+    width: 130px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.avatar-img {
+    height: 130px;
+    width: 130px;
+    border-radius: 50%;
+}
+
+.avatar-edit {
+    background-color: #2593a4;
+    border-radius: 50%;
+    border: solid 2px white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    bottom: -12px;
+    right: 50px;
+    padding: 4px 0 0 4px;
+}
+
+.avatar-edit-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.avatar-input {
+    position: absolute;
+    background-color: green;
+    width: 20px;
+    opacity: 0;
+}
+
+/* Student profile input form */
+.profile-input-field {
+    width: 100%;
+    /* background-color: red; */
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.profile-input-field input {
+    background-color: #ececec;
+    border: solid 1px #7f7f7f;
+    width: 100%;
+    height: 50px;
+    border-radius: 8px;
+    padding-left: 20px;
+}
+
+.profile-input-field p {
+    display: inline-block;
+    background-color: #ececec;
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    padding: 0 2px;
+    color: #e63946;
+    font-weight: 600;
+}
+
+.profile-input-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+}
+
+.profile-save {
+    /* background-color: green; */
+    text-align: center;
+}
+
+.profile-save button {
+    font-family: 'Ubuntu', sans-serif;
+    width: 120px;
+    height: 50px;
+    background-color: #1e6767;
+    border: solid 1px #6f7b7b;
+    box-shadow: 0 3px 4px #949393;
+    border-radius: 2px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* Alert example */
+.alert-frame {
+    /* display: none; */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.alert-window {
+    width: 380px;
+}
+
+.alert-base {
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+}
+
+.alert-header {
+    text-align: end;
+}
+.alert-header button {
+    border: none;
+    background-color: #fff;
+}
+.alert-header img {
+    width: 15px;
+}
+
+.alert-logo {
+    display: flex;
+    justify-content: center;
+}
+.alert-logo img {
+    width: 180px;
+}
+
+.alert-title {
+    display: flex;
+    justify-content: center;
+}
+.alert-title p {
+    font-family: 'Aleo', serif;
+    font-size: 60px;
+    font-style: italic;
+    font-weight: 700;
+    color: #00a198;
+}
+
+.alert-desc {
+    display: flex;
+    justify-content: center;
+}
+
+.alert-desc p {
+    font-family: 'Aleo', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #bababa;
+}
+
+.alert-button {
+    display: flex;
+    justify-content: center;
+}
+.alert-button button {
+    height: 50px;
+    width: 127px;
+    background-color: #fff;
+    border-radius: 25px;
+    border: solid 1px #585858;
+    color: #585858;
+
+    font-family: 'Aleo', serif;
+    font-size: 18px;
+    font-weight: 600;
+}
+
 /* always at last */
 input:focus {
     background-color: #fff;
@@ -515,9 +755,9 @@ input:focus {
     border: 1px solid #059999;
     box-shadow: 0 0 4px #719ece;
 }
-button:hover{
+button:hover {
     cursor: pointer;
 }
-button:active{
+button:active {
     opacity: 0.8;
 }
