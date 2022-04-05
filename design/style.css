@@ -416,7 +416,7 @@ section {
 .form-frame{
     width: 580px;
     background-color: #ececec;
-    padding: 20px 40px;
+    padding: 20px 40px 30px 40px;
     /* copied from up */
     font-family: 'Ubuntu', sans-serif;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
