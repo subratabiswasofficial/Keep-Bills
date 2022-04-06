@@ -9,7 +9,8 @@
     "client": "npm start --prefix client",
     "server": "nodemon src/server",
     "dev": "concurrently \"npm run server\"  \"npm run client\"",
-    "design": "live-server ./design"
+    "design": "live-server ./design",
+    "heroku-postbuild": "npm install --perfix client && npm run build --prefix client"
   },
   "repository": {
     "type": "git",

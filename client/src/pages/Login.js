@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import email from '../images/email.png';
-import password from '../images/password.png';
-import loading from '../images/loading2.png';
+import email from '../images/login/email.png';
+import password from '../images/login/password.png';
+import loading from '../images/login/loading2.png';
 
 const Login = () => {
     const [loginForm, setLoginForm] = useState({

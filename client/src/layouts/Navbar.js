@@ -1,6 +1,10 @@
 import React from 'react';
 import Logo from '../styles/logo';
-const Navbar = () => {
+import { v4 as uuid } from 'uuid';
+import { useLocation, Link } from 'react-router-dom';
+
+const Navbar = ({ menu = [] }) => {
+    const loaction = useLocation();
     return (
         <header>
             <div className="content">
@@ -9,9 +13,13 @@ const Navbar = () => {
                         <Logo />
                     </div>
                     <ul>
-                        <li>LINK 1</li>
-                        <li>LINK 2</li>
-                        <li className="active-link">LOGIN</li>
+                        {menu.map(({ title, path }) => (
+                            <Link to={path}>
+                                <li className={loaction.pathname === path ? 'active-link' : ''} key={uuid()}>
+                                    {title}
+                                </li>
+                            </Link>
+                        ))}
                     </ul>
                 </nav>
             </div>
