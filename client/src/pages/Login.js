@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import email from '../images/login/email.png';
 import password from '../images/login/password.png';
 import loading from '../images/login/loading2.png';
 
-import { testReducer } from '../actions/auth';
+import { sendOtp, varifyOtpAndNavigate } from '../actions/auth';
 
-const Login = ({ testReducer }) => {
+const Login = ({ otp_sent, sendOtp, varifyOtpAndNavigate }) => {
+    const navigate = useNavigate();
+
     const [loginForm, setLoginForm] = useState({
         email: '',
         otp: ''
     });
-    const [varifyOtp, setVarifyOtp] = useState(false);
+
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    };
 
     const validNumber = (code = '') => {
         for (let i = 0; i < code.length; ++i) {
@@ -38,51 +45,14 @@ const Login = ({ testReducer }) => {
         });
     };
 
-    const otoRequestHandler = async () => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        };
-        const body = JSON.stringify({ email: loginForm.email });
-        try {
-            const res = await axios.post('/api/login-request-otp', body, config);
-            console.log(res.data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    const otpVarifyHandler = async () => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        };
-        const body = JSON.stringify({ email: loginForm.email, otp: Number(loginForm.otp) });
-        try {
-            console.log(body);
-            const res = await axios.post('/api/login-varify-otp', body, config);
-            console.log(res.data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
     const sendOtpHandler = () => {
-        testReducer('send otp mf');
-        setVarifyOtp(!varifyOtp);
-        console.log('send OTP');
-        otoRequestHandler();
+        if (validateEmail(loginForm.email) === null) return;
+        sendOtp(loginForm.email);
     };
+
     const varifyOtpHandler = () => {
-        if (loginForm.otp.length !== 6) {
-            return;
-        }
-        testReducer('varify otp mf');
-        setVarifyOtp(!varifyOtp);
-        console.log('varify OTP');
-        otpVarifyHandler();
+        if (loginForm.otp.length !== 6) return;
+        varifyOtpAndNavigate(loginForm.email, loginForm.otp, navigate);
     };
 
     return (
@@ -102,15 +72,23 @@ const Login = ({ testReducer }) => {
                                 <div className="form-area">
                                     <div className="field">
                                         <img src={email} alt="email icon" />
-                                        <input name="email" className="email" type="text" placeholder="Enter Email" value={loginForm.email} onChange={formOnChangeHandler} />
+                                        <input name="email" type="text" placeholder="Enter Email" value={loginForm.email} onChange={formOnChangeHandler} disabled={otp_sent} />
                                     </div>
                                     <div className="field">
                                         <img src={password} alt="otp icon" />
-                                        <input name="otp" className="otp" type="text" placeholder="Enter 6 digit OTP" value={loginForm.otp} onChange={formOnChangeHandler} disabled={!varifyOtp} />
+                                        <input
+                                            name="otp"
+                                            className={`${!otp_sent ? 'disabled-input' : ''}`}
+                                            type="text"
+                                            placeholder="Enter 6 digit OTP"
+                                            value={loginForm.otp}
+                                            onChange={formOnChangeHandler}
+                                            disabled={!otp_sent}
+                                        />
                                     </div>
                                 </div>
                                 <div className="submit-area">
-                                    {varifyOtp ? (
+                                    {otp_sent ? (
                                         <div className="submit-button">
                                             {/* <img alt="varify icon" /> */}
                                             <button onClick={varifyOtpHandler}>VARIFY OTP</button>
@@ -132,10 +110,13 @@ const Login = ({ testReducer }) => {
 };
 
 /* Used states */
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+    otp_sent: state.auth.otp_sent
+});
 /* used actions */
 const mapDispatchAction = {
-    testReducer
+    sendOtp,
+    varifyOtpAndNavigate
 };
 
 export default connect(mapStateToProps, mapDispatchAction)(Login);

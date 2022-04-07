@@ -139,7 +139,7 @@ section {
 }
 
 .form-area input {
-    background-color: #f7f4f4;
+    /* background-color: #f7f4f4; */
     border-radius: 2px;
     border: solid 1px #949393;
     box-shadow: 0 0 3px #949393;
@@ -152,9 +152,6 @@ section {
 
 .form-area .field:first-child input {
     margin-bottom: 20px;
-}
-.form-area .field:last-child input {
-    background-color: #e2dcdc;
 }
 
 /* .submit-area {
@@ -791,4 +788,8 @@ button:hover {
 }
 button:active {
     opacity: 0.8;
+}
+
+.disabled-input {
+    background-color: #d3d6db;
 }

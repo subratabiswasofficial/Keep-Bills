@@ -1,14 +1,23 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { loadUser } from '../actions/auth';
+import { Navigate } from 'react-router';
 
-const AuthProvider = ({ children, scope }) => {
-    const currentScope = 'admin';
-    // const currentPass = true;
-    console.log(scope === currentScope);
-    if (currentScope !== scope) {
-        return <Navigate to="/401" />;
+const AuthProvider = ({ is_authenticated, user_type }) => {
+    if (is_authenticated && user_type === 'student') {
+        return <Navigate to="/profile" />;
+    } else if (is_authenticated && user_type === 'admin') {
+        return <Navigate to="/dashboard" />;
+    } else {
+        return <Navigate to="/login" />;
     }
-    return children;
 };
 
-export default AuthProvider;
+/* Used states */
+const mapStateToProps = (state) => ({
+    user_type: state.auth.user_type,
+    is_authenticated: state.auth.is_authenticated
+});
+/* used actions */
+const mapDispatchAction = { loadUser };
+
+export default connect(mapStateToProps, mapDispatchAction)(AuthProvider);

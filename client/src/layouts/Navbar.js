@@ -4,8 +4,42 @@ import { v4 as uuid } from 'uuid';
 import { useLocation, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const Navbar = ({ menu = [] }) => {
+const navMenu = {
+    general: [
+        {
+            title: 'LOGIN',
+            path: '/login'
+        }
+    ],
+    student: [
+        {
+            title: 'PROFILE',
+            path: '/profile'
+        },
+        {
+            title: 'BILLS',
+            path: '/bills'
+        },
+        {
+            title: 'LOGOUT',
+            path: '/logout'
+        }
+    ],
+    admin: [
+        {
+            title: 'DASHBOARD',
+            path: '/dashboard'
+        },
+        {
+            title: 'LOGOUT',
+            path: '/logout'
+        }
+    ]
+};
+
+const Navbar = ({ user_type, is_authenticated }) => {
     const loaction = useLocation();
+    const menu = navMenu[is_authenticated && user_type ? user_type : 'general'];
     return (
         <header>
             <div className="content">
@@ -26,4 +60,9 @@ const Navbar = ({ menu = [] }) => {
     );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+    user_type: state.auth.user_type,
+    is_authenticated: state.auth.is_authenticated
+});
+
+export default connect(mapStateToProps, null)(Navbar);

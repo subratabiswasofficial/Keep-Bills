@@ -14,76 +14,49 @@ import Admin from './pages/Admin';
 import NotFound from './pages/NotFound';
 import Unauth from './pages/Unauth';
 import GlobalAlert from './alerts/GlobalAlert';
+import { loadUser } from './actions/auth';
+import Logout from './pages/Logout';
 
-import { testReducer } from './actions/auth';
-
-const navMenu = {
-    general: [
-        {
-            title: 'LOGIN',
-            path: '/'
-        }
-    ],
-    student: [
-        {
-            title: 'PROFILE',
-            path: '/profile'
-        },
-        {
-            title: 'BILLS',
-            path: '/bills'
-        },
-        {
-            title: 'LOGOUT',
-            path: '/logout'
-        }
-    ],
-    admin: [
-        {
-            title: 'DASHBOARD',
-            path: '/dashboard'
-        },
-        {
-            title: 'LOGOUT',
-            path: '/logout'
-        }
-    ]
-};
+/* this is mendatory */
+if (localStorage.token) {
+    store.dispatch(loadUser());
+}
 
 const App = () => {
-    /* load user for first time */
-    const loadUser = () => {
-        console.log('Load user for first time');
-        store.dispatch(testReducer('this is the app mf'));
-    };
-
     useEffect(() => {
-        loadUser();
+        store.dispatch(loadUser());
     }, []);
     /* */
 
     return (
         <Provider store={store}>
             <Router>
-                <Navbar menu={navMenu['student']} />
+                <Navbar />
                 <GlobalAlert active={false} type="success" />
+                {/* Private Route at React V6 */}
                 <Routes>
-                    <Route path="/" element={<Login />} />
-                    {/* Private Route at React V6 */}
-                    <Route path="/test" element={<PrivateRoute />}>
-                        <Route path="/test" element={<StudentProfile />} />
+                    {/* General */}
+                    <Route path="/" element={<AuthProvider />} />
+
+                    {/* student */}
+                    <Route path="/profile" element={<PrivateRoute scope="student" />}>
+                        <Route path="/profile" element={<StudentProfile />} />
                     </Route>
-                    <Route path="/profile" element={true ? <StudentProfile /> : <Unauth />} />
-                    <Route path="/bills" element={<StudentBills />} />
-                    {/* Using Auth provider scope */}
-                    <Route
-                        path="/dashboard"
-                        element={
-                            <AuthProvider scope="admin">
-                                <Admin />
-                            </AuthProvider>
-                        }
-                    />
+
+                    <Route path="/bills" element={<PrivateRoute scope="student" />}>
+                        <Route path="/bills" element={<StudentBills />} />
+                    </Route>
+
+                    {/* admin */}
+                    <Route path="/dashboard" element={<PrivateRoute scope="admin" />}>
+                        <Route path="/dashboard" element={<Admin />} />
+                    </Route>
+
+                    {/* */}
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/logout" element={<Logout />} />
+
+                    <Route path="/401" element={<Unauth />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </Router>
