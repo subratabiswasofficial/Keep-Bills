@@ -663,7 +663,6 @@ section {
 
 /* Alert example */
 .alert-frame {
-    /* display: none; */
     position: absolute;
     top: 0;
     bottom: 0;
@@ -743,6 +742,40 @@ section {
     font-family: 'Aleo', serif;
     font-size: 18px;
     font-weight: 600;
+}
+
+/* 404 & 401 page */
+.error-page-frame {
+    width: 100%;
+    height: 360px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-content-area {
+    text-align: center;
+}
+.error-content-area img {
+    width: 180px;
+}
+.error-content-area p {
+    font-family: 'Aleo', serif;
+    font-size: 18px;
+    font-weight: 700;
+    font-size: 100px;
+}
+
+.error-page-bottom {
+    width: 100%;
+    /* background-color: red; */
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
 }
 
 /* always at last */

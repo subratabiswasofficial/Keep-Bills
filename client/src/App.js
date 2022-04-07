@@ -3,12 +3,16 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import store from './store';
 import { Provider } from 'react-redux';
+import PrivateRoute from './PrivateRoute';
+import AuthProvider from './AuthProvider';
 
 import Login from './pages/Login';
 import Navbar from './layouts/Navbar';
 import StudentProfile from './pages/StudentProfile';
 import StudentBills from './pages/StudentBills';
 import Admin from './pages/Admin';
+import NotFound from './pages/NotFound';
+import Unauth from './pages/Unauth';
 import GlobalAlert from './alerts/GlobalAlert';
 
 import { testReducer } from './actions/auth';
@@ -55,9 +59,22 @@ const App = () => {
                 <GlobalAlert active={false} type="success" />
                 <Routes>
                     <Route path="/" element={<Login />} />
-                    <Route path="/profile" element={<StudentProfile />} />
+                    {/* Private Route at React V6 */}
+                    <Route path="/test" element={<PrivateRoute />}>
+                        <Route path="/test" element={<StudentProfile />} />
+                    </Route>
+                    <Route path="/profile" element={false ? <StudentProfile /> : <Unauth />} />
                     <Route path="/bills" element={<StudentBills />} />
-                    <Route path="/dashboard" element={<Admin />} />
+                    {/* Using Auth provider scope */}
+                    <Route
+                        path="/dashboard"
+                        element={
+                            <AuthProvider scope="admin">
+                                <Admin />
+                            </AuthProvider>
+                        }
+                    />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </Router>
         </Provider>
