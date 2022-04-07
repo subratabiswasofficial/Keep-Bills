@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import email from '../images/login/email.png';
 import password from '../images/login/password.png';
 import loading from '../images/login/loading2.png';
 
-const Login = () => {
+import { testReducer } from '../actions/auth';
+
+const Login = ({ testReducer }) => {
     const [loginForm, setLoginForm] = useState({
         email: '',
         otp: ''
@@ -67,6 +70,7 @@ const Login = () => {
     };
 
     const sendOtpHandler = () => {
+        testReducer('send otp mf');
         setVarifyOtp(!varifyOtp);
         console.log('send OTP');
         otoRequestHandler();
@@ -75,6 +79,7 @@ const Login = () => {
         if (loginForm.otp.length !== 6) {
             return;
         }
+        testReducer('varify otp mf');
         setVarifyOtp(!varifyOtp);
         console.log('varify OTP');
         otpVarifyHandler();
@@ -126,4 +131,11 @@ const Login = () => {
     );
 };
 
-export default Login;
+/* Used states */
+const mapStateToProps = () => ({});
+/* used actions */
+const mapDispatchAction = {
+    testReducer
+};
+
+export default connect(mapStateToProps, mapDispatchAction)(Login);

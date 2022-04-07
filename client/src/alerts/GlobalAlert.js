@@ -3,9 +3,9 @@ import CloseIcon from '../images/alert/close.png';
 import SuccessIcon from '../images/alert/checked.png';
 import ErrorIcon from '../images/alert/cancel.png';
 
-const GlobalAlert = ({ active, status }) => {
+const GlobalAlert = ({ active, type }) => {
     const [open, setOpen] = useState(active);
-    const statusIcon = {
+    const typeIcon = {
         success: SuccessIcon,
         error: ErrorIcon
     };
@@ -22,7 +22,7 @@ const GlobalAlert = ({ active, status }) => {
                     </button>
                 </div>
                 <div class="alert-base alert-logo">
-                    <img src={statusIcon[status]} alt="Success Icon" />
+                    <img src={typeIcon[type]} alt="Success Icon" />
                 </div>
                 <div class="alert-base alert-title">
                     <p>Viola !</p>
