@@ -17,28 +17,38 @@ import GlobalAlert from './alerts/GlobalAlert';
 
 import { testReducer } from './actions/auth';
 
-const navMenu = [
-    {
-        title: 'PROFILE',
-        path: '/profile'
-    },
-    {
-        title: 'BILLS',
-        path: '/bills'
-    },
-    {
-        title: 'DASHBOARD',
-        path: '/dashboard'
-    },
-    {
-        title: 'LOGIN',
-        path: '/'
-    },
-    {
-        title: 'LOGOUT',
-        path: '/logout'
-    }
-];
+const navMenu = {
+    general: [
+        {
+            title: 'LOGIN',
+            path: '/'
+        }
+    ],
+    student: [
+        {
+            title: 'PROFILE',
+            path: '/profile'
+        },
+        {
+            title: 'BILLS',
+            path: '/bills'
+        },
+        {
+            title: 'LOGOUT',
+            path: '/logout'
+        }
+    ],
+    admin: [
+        {
+            title: 'DASHBOARD',
+            path: '/dashboard'
+        },
+        {
+            title: 'LOGOUT',
+            path: '/logout'
+        }
+    ]
+};
 
 const App = () => {
     /* load user for first time */
@@ -55,7 +65,7 @@ const App = () => {
     return (
         <Provider store={store}>
             <Router>
-                <Navbar menu={navMenu} />
+                <Navbar menu={navMenu['student']} />
                 <GlobalAlert active={false} type="success" />
                 <Routes>
                     <Route path="/" element={<Login />} />
@@ -63,7 +73,7 @@ const App = () => {
                     <Route path="/test" element={<PrivateRoute />}>
                         <Route path="/test" element={<StudentProfile />} />
                     </Route>
-                    <Route path="/profile" element={false ? <StudentProfile /> : <Unauth />} />
+                    <Route path="/profile" element={true ? <StudentProfile /> : <Unauth />} />
                     <Route path="/bills" element={<StudentBills />} />
                     {/* Using Auth provider scope */}
                     <Route
