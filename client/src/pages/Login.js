@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 
 import email from '../images/login/email.png';
 import password from '../images/login/password.png';
@@ -8,7 +8,7 @@ import loading from '../images/login/loading2.png';
 
 import { sendOtp, varifyOtpAndNavigate } from '../actions/auth';
 
-const Login = ({ otp_sent, sendOtp, varifyOtpAndNavigate }) => {
+const Login = ({ is_authenticated, otp_sent, sendOtp, varifyOtpAndNavigate }) => {
     const navigate = useNavigate();
 
     const [loginForm, setLoginForm] = useState({
@@ -38,6 +38,7 @@ const Login = ({ otp_sent, sendOtp, varifyOtpAndNavigate }) => {
             if (!validNumber(e.target.value)) {
                 return;
             }
+            if (e.target.value.length > 6) return;
         }
         setLoginForm({
             ...loginForm,
@@ -53,7 +54,15 @@ const Login = ({ otp_sent, sendOtp, varifyOtpAndNavigate }) => {
     const varifyOtpHandler = () => {
         if (loginForm.otp.length !== 6) return;
         varifyOtpAndNavigate(loginForm.email, loginForm.otp, navigate);
+        setLoginForm({
+            email: '',
+            otp: ''
+        });
     };
+
+    if (is_authenticated) {
+        return <Navigate to="/" />;
+    }
 
     return (
         <>
@@ -90,12 +99,11 @@ const Login = ({ otp_sent, sendOtp, varifyOtpAndNavigate }) => {
                                 <div className="submit-area">
                                     {otp_sent ? (
                                         <div className="submit-button">
-                                            {/* <img alt="varify icon" /> */}
+                                            <img src={loading} alt="loading icon" />
                                             <button onClick={varifyOtpHandler}>VARIFY OTP</button>
                                         </div>
                                     ) : (
                                         <div className="submit-button">
-                                            <img src={loading} alt="loading icon" />
                                             <button onClick={sendOtpHandler}>SEND OTP</button>
                                         </div>
                                     )}
@@ -111,7 +119,8 @@ const Login = ({ otp_sent, sendOtp, varifyOtpAndNavigate }) => {
 
 /* Used states */
 const mapStateToProps = (state) => ({
-    otp_sent: state.auth.otp_sent
+    otp_sent: state.auth.otp_sent,
+    is_authenticated: state.auth.is_authenticated
 });
 /* used actions */
 const mapDispatchAction = {

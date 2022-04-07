@@ -1,49 +1,60 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+
 import CloseIcon from '../images/alert/close.png';
 import SuccessIcon from '../images/alert/checked.png';
 import ErrorIcon from '../images/alert/cancel.png';
+import WarnIcon from '../images/alert/warn.png';
 
-const GlobalAlert = ({ active, type }) => {
-    const [open, setOpen] = useState(active);
-    const typeIcon = {
-        success: SuccessIcon,
-        error: ErrorIcon
+import { exitAlert } from '../actions/alert';
+
+const iconType = {
+    success: SuccessIcon,
+    error: ErrorIcon,
+    warn: WarnIcon
+};
+
+const GlobalAlert = ({ type, title, message, exitAlert }) => {
+    const onCloseHandler = () => {
+        exitAlert();
     };
-    return open ? (
-        <div class="alert-frame">
-            <div class="alert-window">
-                <div class="alert-base alert-header">
-                    <button
-                        onClick={() => {
-                            setOpen(false);
-                        }}
-                    >
-                        <img src={CloseIcon} alt="Close" />
-                    </button>
-                </div>
-                <div class="alert-base alert-logo">
-                    <img src={typeIcon[type]} alt="Success Icon" />
-                </div>
-                <div class="alert-base alert-title">
-                    <p>Viola !</p>
-                </div>
-                <div class="alert-base alert-desc">
-                    <p>Waoow Nice Wonder full</p>
-                </div>
-                <div class="alert-base alert-button">
-                    <button
-                        onClick={() => {
-                            setOpen(false);
-                        }}
-                    >
-                        OK
-                    </button>
+    const onOkHandler = () => {
+        exitAlert();
+    };
+    return (
+        type && (
+            <div className="alert-frame">
+                <div className="alert-window">
+                    <div className="alert-base alert-header">
+                        <button onClick={onCloseHandler}>
+                            <img src={CloseIcon} alt="Close" />
+                        </button>
+                    </div>
+                    <div className="alert-base alert-logo">
+                        <img src={iconType[type]} alt="Success Icon" />
+                    </div>
+                    <div className="alert-base alert-title">
+                        <p>{title}</p>
+                    </div>
+                    <div className="alert-base alert-desc">
+                        <p>{message}</p>
+                    </div>
+                    <div className="alert-base alert-button">
+                        <button onClick={onOkHandler}>OK</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    ) : (
-        <></>
+        )
     );
 };
 
-export default GlobalAlert;
+const mapStateToProp = (state) => ({
+    type: state.alert.type,
+    title: state.alert.title,
+    message: state.alert.message
+});
+const mapDispatchAction = {
+    exitAlert
+};
+
+export default connect(mapStateToProp, mapDispatchAction)(GlobalAlert);

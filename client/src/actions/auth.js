@@ -1,5 +1,6 @@
 import { AUTH_ERROR, LOGIN_SUCCESS, OTP_MISMATCHED, OTP_SENT, USER_LOADED, USER_LOGOUT } from './types';
 import axios from 'axios';
+import { alert } from './alert';
 
 export const loadUser = () => (dispatch) => {
     const token = localStorage.getItem('token');
@@ -8,16 +9,12 @@ export const loadUser = () => (dispatch) => {
         dispatch({
             type: AUTH_ERROR
         });
+    } else {
+        dispatch({
+            type: USER_LOADED,
+            payload: { token, type }
+        });
     }
-    dispatch({
-        type: USER_LOADED,
-        payload: { token, type }
-    });
-};
-
-export const loadUserAndNavigate = (navigate) => (dispatch) => {
-    dispatch(loadUser());
-    // navigate('/');
 };
 
 export const sendOtp = (email) => async (dispatch) => {
@@ -35,7 +32,7 @@ export const sendOtp = (email) => async (dispatch) => {
         });
     } catch (err) {
         console.log(err);
-        /* SLOW ALERT */
+        dispatch(alert('warn', 'Wait !', 'Please reacharge your wifi', 10000));
     }
 };
 
@@ -62,12 +59,12 @@ export const varifyOtpAndNavigate = (email, otp, navigate) => async (dispatch) =
             type: OTP_MISMATCHED
         });
         console.log(err);
-        /* slow alert */
+        dispatch(alert('error', 'Oops !', 'Wrong OTP. Please try Again', 10000));
     }
 };
 
 /* might be async later */
-export const logout = () => async (dispatch) => {
+export const logout = () => (dispatch) => {
     localStorage.clear();
     dispatch({
         type: USER_LOGOUT

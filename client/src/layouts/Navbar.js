@@ -37,9 +37,21 @@ const navMenu = {
     ]
 };
 
+const Menu = ({ type }) => {
+    const location = useLocation();
+    const menu = navMenu[type];
+    return (
+        <>
+            {menu.map(({ title, path }) => (
+                <Link to={path} key={uuid()}>
+                    <li className={location.pathname === path ? 'active-link' : ''}>{title}</li>
+                </Link>
+            ))}
+        </>
+    );
+};
+
 const Navbar = ({ user_type, is_authenticated }) => {
-    const loaction = useLocation();
-    const menu = navMenu[is_authenticated && user_type ? user_type : 'general'];
     return (
         <header>
             <div className="content">
@@ -48,11 +60,7 @@ const Navbar = ({ user_type, is_authenticated }) => {
                         <Logo />
                     </div>
                     <ul>
-                        {menu.map(({ title, path }) => (
-                            <Link to={path} key={uuid()}>
-                                <li className={loaction.pathname === path ? 'active-link' : ''}>{title}</li>
-                            </Link>
-                        ))}
+                        <Menu type={is_authenticated && user_type ? user_type : 'general'} />
                     </ul>
                 </nav>
             </div>
