@@ -7,7 +7,7 @@ class Session {
         const timestamp = Date.now();
         await sqlQuery('DELETE FROM Session WHERE email = ?', [email]);
         await sqlQuery(`INSERT INTO Session VALUES ( ?, ?, ? )`, [email, otp, timestamp]);
-        sendEmail(email, `<p>Your OTP is <strong>${otp}</strong></p>`, 'OTP Varification', true);
+        // sendEmail(email, `<p>Your OTP is <strong>${otp}</strong></p>`, 'OTP Varification', true);
         console.log('email : ', email, ' otp ', otp);
     }
     static getOtpInRange(min, max) {
