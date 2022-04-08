@@ -23,11 +23,10 @@ const sendGmail = async (to, html, subject = '', printStatus = false) => {
             auth: {
                 type: 'OAuth2',
                 user: process.env.GMAIL_USER,
-                pass: process.env.GMAIL_PASS,
                 clientId: CLIENT_ID,
                 clientSecret: CLIENT_SECRET,
-                refreshToken: REFRESH_TOKEN
-                // accessToken: accessToken
+                refreshToken: REFRESH_TOKEN,
+                accessToken: accessToken
             }
         });
         const result = await transport.sendMail(mailOptions);

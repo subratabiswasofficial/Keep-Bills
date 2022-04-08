@@ -1,30 +1,15 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const { connctDb } = require('./db/mysql');
 const path = require('path');
+const fileUpload = require('express-fileupload');
+
+const { connctDb } = require('./db/mysql');
+
 app.use(express.json());
+app.use(fileUpload());
+
 connctDb();
-
-/*
- */
-// const File = require('./models/File');
-// const testFx = async () => {
-//     const file = new File('https://www.elegantthemes.com/blog/wp-content/uploads/2018/12/top11.png');
-//     // const result = await File.getUrlByFid('246b6845-4fa0-4fe2-ae13-e997d545ffc7');
-//     const result = await file.save();
-//     console.log(result);
-// };
-// testFx();
-
-// const Bill = require('./models/Bill');
-// const bill = new Bill({ uid: '153b9b34-bcd6-4dab-9252-cb99dd0778b1', amount: 12340, ref: 'upi 123456' });
-// bill.save();
-// const testFx = async () => {
-//     const bills = await Bill.getBillsByRoll(18101105043);
-//     console.log(bills);
-// };
-// testFx();
 
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
