@@ -19,7 +19,9 @@ const sendGmail = async (to, html, subject = '', printStatus = false) => {
         };
         const accessToken = await oAuth2Client.getAccessToken();
         const transport = nodemailer.createTransport({
-            service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
             auth: {
                 type: 'OAuth2',
                 user: 'subrataemail1999@gmail.com',
