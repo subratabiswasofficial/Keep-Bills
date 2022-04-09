@@ -6,10 +6,12 @@ export const loadUser = () => (dispatch) => {
     const token = localStorage.getItem('token');
     const type = localStorage.getItem('type');
     if (token === null || type == null) {
+        axios.defaults.headers.common['x-auth-token'] = null; // default auth header
         dispatch({
             type: AUTH_ERROR
         });
     } else {
+        axios.defaults.headers.common['x-auth-token'] = token;
         dispatch({
             type: USER_LOADED,
             payload: { token, type }

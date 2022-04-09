@@ -6,12 +6,17 @@ import SuccessIcon from '../images/alert/checked.png';
 import ErrorIcon from '../images/alert/cancel.png';
 import WarnIcon from '../images/alert/warn.png';
 
+import ErrorIcon2 from '../images/alert/loudly_crying_face.gif';
+import SuccessIcon2 from '../images/alert/smiling_face_with_sunglasses.gif';
+import LoadingIcon from '../images/alert/penguin.gif';
+
 import { exitAlert } from '../actions/alert';
 
 const iconType = {
-    success: SuccessIcon,
-    error: ErrorIcon,
-    warn: WarnIcon
+    success: SuccessIcon2,
+    error: ErrorIcon2,
+    warn: WarnIcon,
+    loading: LoadingIcon
 };
 
 const GlobalAlert = ({ type, title, message, exitAlert }) => {

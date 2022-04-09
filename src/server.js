@@ -16,9 +16,10 @@ const swaggerUi = require('swagger-ui-express');
 const specs = swaggerJsdoc(require('./swagger.json'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-const { loginRouter, studentRouter } = require('./routers');
+const { loginRouter, studentRouter, billRouter } = require('./routers');
 app.use('/api', loginRouter);
 app.use('/api/student', studentRouter);
+app.use('/api/bill', billRouter);
 
 //==========SERVE STATIC FILES==========
 if (process.env.NODE_ENV === 'production') {

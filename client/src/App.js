@@ -13,9 +13,12 @@ import StudentBills from './pages/StudentBills';
 import Admin from './pages/Admin';
 import NotFound from './pages/NotFound';
 import Unauth from './pages/Unauth';
-import GlobalAlert from './alerts/GlobalAlert';
-import { loadUser } from './actions/auth';
 import Logout from './pages/Logout';
+
+import GlobalAlert from './alerts/GlobalAlert';
+import Loading from './alerts/Loading';
+
+import { loadUser } from './actions/auth';
 
 /* this is mendatory */
 if (localStorage.token) {
@@ -32,7 +35,9 @@ const App = () => {
         <Provider store={store}>
             <Router>
                 <Navbar />
-                <GlobalAlert active={false} type="success" />
+                <GlobalAlert />
+                <Loading />
+
                 {/* Private Route at React V6 */}
                 <Routes>
                     {/* General */}

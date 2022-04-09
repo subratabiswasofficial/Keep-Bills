@@ -8,7 +8,7 @@ const { studentController } = require('../controllers');
  * @swagger
  * /profile:
  *   get:
- *     description: Noise
+ *     description: Noice
  */
 router.get('/profile', auth.student, studentController.getProfile);
 

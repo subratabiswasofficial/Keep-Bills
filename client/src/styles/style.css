@@ -695,6 +695,7 @@ section {
 .alert-logo {
     display: flex;
     justify-content: center;
+    min-height: 220px;
 }
 .alert-logo img {
     width: 180px;
