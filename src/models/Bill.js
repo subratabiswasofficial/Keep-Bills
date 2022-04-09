@@ -26,7 +26,7 @@ class Bill {
             `select b.amount, b.semester, b.ref, b.created, b.status, f.location as screenshot from ( select * from bills where uid = ? ) b
         left join files f
         on b.fid = f.fid
-        order by b.created desc`,
+        order by b.semester desc`,
             [uid]
         );
         return results;
@@ -41,7 +41,30 @@ class Bill {
         }
     }
     static async getBillsByRoll(roll) {
-        const { results } = await sqlQuery(`SELECT * FROM Bills WHERE uid = ( SELECT uid FROM Students WHERE roll = ? ) `, [roll]);
+        const { results } = await sqlQuery(
+            `select b.bid, b.amount, b.semester, b.status, s.roll, f.location as screenshot from bills b 
+        left join students s
+        on b.uid = s.uid
+        left join files f
+        on f.fid = b.fid
+        having s.roll = ?
+        order by semester desc`,
+            [roll]
+        );
+        return results;
+    }
+    static async getBills() {
+        const { results } = await sqlQuery(
+            `select b.bid, b.amount, b.semester, b.status, s.roll, f.location as screenshot from bills b 
+        left join students s
+        on b.uid = s.uid
+        left join files f
+        on f.fid = b.fid`
+        );
+        return results;
+    }
+    static async markBillByBid(bid, status) {
+        const { results } = await sqlQuery(`UPDATE Bills SET status = ? WHERE bid = ?`, [status, bid]);
         return results;
     }
 }
@@ -51,6 +74,19 @@ class Bill {
 select b.amount, b.semester, b.ref, b.created, b.status, f.location from ( select * from bills where uid = '9383166a-1218-415b-b06c-a71dfe98c351' ) b
 left join files f
 on b.fid = f.fid;
+
+select b.bid, b.amount, b.semester, s.roll, f.location from bills b 
+left join students s
+on b.uid = s.uid
+left join files f
+on f.fid = b.fid;
+
+select b.bid, b.amount, b.semester, s.roll, f.location from bills b 
+left join students s
+on b.uid = s.uid
+left join files f
+on f.fid = b.fid
+having s.roll = ?;
 
 create table Bills(
     bid varchar(50),

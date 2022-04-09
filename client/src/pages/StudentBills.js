@@ -23,7 +23,7 @@ const BillHistory = () => {
             setBillsHistory(bills);
             setPreviewBillsHistory(bills);
         } catch (error) {
-            console.log('No Profile found');
+            console.log(error);
         }
     };
 
@@ -62,30 +62,16 @@ const BillHistory = () => {
             </div>
             <div className="search-rows">
                 {previewBillsHistory.map(({ amount, semester, ref, screenshot, created, status }) => (
-                    <div className="data-row" key={uuid()}>
+                    <div className={`data-row ${status}`} key={uuid()}>
                         <p>{created.split('T')[0]}</p>
                         <p>{amount}</p>
                         <p>{semester}</p>
                         <p className="screenshot">
                             <a href={screenshot}>Click to download</a>
                         </p>
-                        <p className={status}>{`${status[0].toUpperCase()}${status.slice(1)}`}</p>
+                        <p>{`${status[0].toUpperCase()}${status.slice(1)}`}</p>
                     </div>
                 ))}
-                <div className="data-row">
-                    <p>08-03-2020</p>
-                    <p>12000</p>
-                    <p>6</p>
-                    <p className="screenshot">Demo Rejected</p>
-                    <p className="rejected">Rejected</p>
-                </div>
-                <div className="data-row">
-                    <p>09-03-2020</p>
-                    <p>12000</p>
-                    <p>6</p>
-                    <p className="screenshot">Demo Accepted</p>
-                    <p className="accepted">Accepted</p>
-                </div>
             </div>
         </div>
     );
@@ -202,7 +188,7 @@ const BillForm = ({ alert, showLoading, hideLoading }) => {
 };
 
 const StudentBills = ({ alert, showLoading, hideLoading }) => {
-    const [openForm, setOpenForm] = useState(true);
+    const [openForm, setOpenForm] = useState(false);
     return (
         <section>
             <div className="banner">
