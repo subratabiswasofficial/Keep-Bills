@@ -20,6 +20,7 @@ const sendEmail = (to, html, subject = '', printStatus = false) => {
                 return reject(error);
             }
             if (printStatus) {
+                console.log('mail gun body printing');
                 console.log(body);
             }
             return resolve(body);

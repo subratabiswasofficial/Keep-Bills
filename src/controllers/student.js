@@ -34,7 +34,7 @@ const getProfile = async (req, res) => {
         return res.status(200).send(student);
     } catch (error) {
         console.log(error);
-        return res.status(500).send(result);
+        return res.status(500).send('Internal server error');
     }
 };
 

@@ -7,7 +7,7 @@ const requestOTP = async (req, res) => {
         return res.status(200).send('OTP has been sent to your email. Valid for 10 min');
     } catch (error) {
         console.log(error);
-        return res.status(500).send('Internal Server Error');
+        return res.status(500).send('Internal server error');
     }
 };
 
@@ -27,7 +27,7 @@ const varifyOTP = async (req, res) => {
         return res.status(400).send('OTP mismatched. Try again');
     } catch (error) {
         console.log(error);
-        return res.status(500).send('Internal Server Error');
+        return res.status(500).send('Internal server error');
     }
 };
 
