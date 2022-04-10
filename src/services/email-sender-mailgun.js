@@ -15,6 +15,7 @@ const sendEmail = (to, html, subject = '', printStatus = false) => {
     const core = new Promise((resolve, reject) => {
         mg.messages().send(mailOptions, function (error, body) {
             if (error) {
+                console.log('error at mailgun api');
                 console.log(error);
                 return reject(error);
             }
