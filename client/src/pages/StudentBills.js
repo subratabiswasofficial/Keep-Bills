@@ -10,8 +10,9 @@ import SearchIcon from '../images/bills/search.png';
 import { validNumber } from '../utils';
 import { alert } from '../actions/alert';
 import { showLoading, hideLoading } from '../actions/loading';
+import { showBill } from '../actions/billView';
 
-const BillHistory = () => {
+const BillHistory = ({ view, showBill }) => {
     const [billsHistory, setBillsHistory] = useState([]);
     const [previewBillsHistory, setPreviewBillsHistory] = useState([]);
 
@@ -28,8 +29,10 @@ const BillHistory = () => {
     };
 
     useEffect(() => {
+        if (view) return;
+        // if bill view is closed then it will work
         retriveExistingBills();
-    }, []);
+    }, [view]);
 
     const [searchText, setSearchText] = useState('');
 
@@ -58,10 +61,10 @@ const BillHistory = () => {
                 <p>Amount</p>
                 <p>Semester</p>
                 <p>Document</p>
-                <p>Status</p>
+                <p>Action</p>
             </div>
             <div className="search-rows">
-                {previewBillsHistory.map(({ amount, semester, ref, screenshot, created, status }) => (
+                {previewBillsHistory.map(({ bid, amount, semester, ref, screenshot, created, status }) => (
                     <div className={`data-row ${status}`} key={uuid()}>
                         <p>{created.split('T')[0]}</p>
                         <p>{amount}</p>
@@ -69,7 +72,17 @@ const BillHistory = () => {
                         <p className="screenshot">
                             <a href={screenshot}>Click to download</a>
                         </p>
-                        <p>{`${status[0].toUpperCase()}${status.slice(1)}`}</p>
+                        {/* <p>{`${status[0].toUpperCase()}${status.slice(1)}`}</p> */}
+                        <div className="action-cell">
+                            {/* <ActionCell bid={bid} /> */}
+                            <button
+                                onClick={() => {
+                                    showBill({ scope: 'student', bid, amount, semester, ref, screenshot, created, status });
+                                }}
+                            >
+                                Click to open
+                            </button>
+                        </div>
                     </div>
                 ))}
             </div>
@@ -187,7 +200,7 @@ const BillForm = ({ alert, showLoading, hideLoading }) => {
     );
 };
 
-const StudentBills = ({ alert, showLoading, hideLoading }) => {
+const StudentBills = ({ view, alert, showLoading, hideLoading, showBill }) => {
     const [openForm, setOpenForm] = useState(false);
     return (
         <section>
@@ -213,7 +226,7 @@ const StudentBills = ({ alert, showLoading, hideLoading }) => {
                                 <img src={HistoryIcon} alt="History" />
                             </div>
                         </div>
-                        {openForm ? <BillForm alert={alert} showLoading={showLoading} hideLoading={hideLoading} /> : <BillHistory />}
+                        {openForm ? <BillForm alert={alert} showLoading={showLoading} hideLoading={hideLoading} /> : <BillHistory view={view} showBill={showBill} />}
                     </div>
                 </div>
             </div>
@@ -222,12 +235,16 @@ const StudentBills = ({ alert, showLoading, hideLoading }) => {
 };
 
 /* Used states */
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+    view: state.billView.view
+});
 /* used actions */
 const mapDispatchAction = {
     alert,
     showLoading,
-    hideLoading
+    hideLoading,
+    /* */
+    showBill
 };
 
 export default connect(mapStateToProps, mapDispatchAction)(StudentBills);

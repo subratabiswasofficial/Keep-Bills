@@ -13,14 +13,16 @@ class Session {
         await sqlQuery('DELETE FROM Session WHERE email = ?', [email]);
         await sqlQuery(`INSERT INTO Session VALUES ( ?, ?, ? )`, [email, otp, timestamp]);
 
-        if (emailService === 'gmail') {
-            if (emailMode === 'test') {
-                sendEmail(email, `<p>Your OTP is <strong>${otp}</strong></p>`, 'OTP Varification', true);
+        if (emailMode !== 'none') {
+            if (emailService === 'gmail') {
+                if (emailMode === 'test') {
+                    sendEmail(email, `<p>Your OTP is <strong>${otp}</strong></p>`, 'OTP Varification', true);
+                } else {
+                    sendGmail(email, `<p>Your OTP is <strong>${otp}</strong></p>`, 'OTP Varification', true);
+                }
             } else {
-                sendGmail(email, `<p>Your OTP is <strong>${otp}</strong></p>`, 'OTP Varification', true);
+                sendEmailMailgun(email, `<p>Your OTP is <strong>${otp}</strong></p>`, 'OTP Varification', true);
             }
-        } else {
-            sendEmailMailgun(email, `<p>Your OTP is <strong>${otp}</strong></p>`, 'OTP Varification', true);
         }
 
         console.log('email : ', email, ' otp ', otp);

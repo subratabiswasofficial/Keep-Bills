@@ -23,7 +23,7 @@ class Bill {
     }
     static async getBillsByUid(uid) {
         const { results } = await sqlQuery(
-            `select b.amount, b.semester, b.ref, b.created, b.status, f.location as screenshot from ( select * from bills where uid = ? ) b
+            `select b.bid, b.amount, b.semester, b.ref, b.created, b.status, f.location as screenshot from ( select * from bills where uid = ? ) b
         left join files f
         on b.fid = f.fid
         order by b.semester desc`,
@@ -40,6 +40,9 @@ class Bill {
             await sqlQuery(`DELETE FROM Bills WHERE bid = ? `, [bid]);
         }
     }
+    static async deleteBillByUidAndBid(uid, bid) {
+        await sqlQuery(`DELETE FROM Bills WHERE bid = ? AND uid = ?`, [bid, uid]);
+    }
     static async getBillsByRoll(roll) {
         const { results } = await sqlQuery(
             `select b.bid, b.amount, b.semester, b.status, s.roll, f.location as screenshot from bills b 
@@ -55,7 +58,7 @@ class Bill {
     }
     static async getBills() {
         const { results } = await sqlQuery(
-            `select b.bid, b.amount, b.semester, b.status, s.roll, f.location as screenshot from bills b 
+            `select b.bid, b.amount, b.semester, b.status, s.roll, b.ref, s.department, b.created, f.location as screenshot from bills b 
         left join students s
         on b.uid = s.uid
         left join files f

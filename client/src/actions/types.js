@@ -21,3 +21,10 @@ export const ERROR_ALERT = 'ERROR_ALERT';
 /* LOADING */
 export const SHOW_LOADING = 'SHOW_LOADING';
 export const HIDE_LOADING = 'HIDE_LOADING';
+
+/* BILLS */
+export const SHOW_BILL = 'SHOW_BILL';
+export const HIDE_BILL = 'HIDE_BILL';
+export const SET_BILL = 'SET_BILL';
+export const CLEAR_BILL = 'CLEAR_BILL';
+export const MARK_BILL = 'MARK_BILL';

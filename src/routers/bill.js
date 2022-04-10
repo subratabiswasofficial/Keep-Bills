@@ -14,4 +14,6 @@ router.post('/', auth.student, billController.createBill);
 
 router.get('/', auth.student, billController.getBill);
 
+router.delete('/:bid', auth.student, billController.deleteBill);
+
 module.exports = router;

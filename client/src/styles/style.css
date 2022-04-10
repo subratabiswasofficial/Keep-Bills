@@ -351,13 +351,36 @@ section {
     background-color: #e7e5e5;
 }
 
-.action-cell {
+/* New Modification */
+/* .action-cell {
     width: 100%;
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
     justify-items: center;
+} */
+
+.action-cell {
+    width: 100%;
+    height: 100%;
+    /* display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-cell button {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #b50c2c;
+    text-decoration: underline;
+    border: none;
+    background-color: inherit;
 }
 
 .approved {
@@ -367,15 +390,15 @@ section {
     background-color: #eb232357 !important;
 }
 
-.action-cell button {
+/* .action-cell button {
     border: none;
     background-color: inherit;
-}
-.action-cell button:active {
-    transform: scale(1.2);
-}
+} */
+/* .action-cell button:active {
+    transform: scale(1.1);
+} */
 
-.action-cell button:nth-child(1) img {
+/* .action-cell button:nth-child(1) img {
     width: 25px;
 }
 .action-cell button:nth-child(2) img {
@@ -385,7 +408,7 @@ section {
 
 .action-cell button:nth-child(3) img {
     width: 20px;
-}
+} */
 
 .accepted {
     color: green !important;
@@ -736,7 +759,6 @@ section {
     border-radius: 25px;
     border: solid 1px #585858;
     color: #585858;
-
     font-family: 'Aleo', serif;
     font-size: 18px;
     font-weight: 600;
@@ -775,6 +797,89 @@ section {
     font-family: 'Ubuntu', sans-serif;
     font-size: 24px;
     font-weight: 800;
+}
+
+/* bill view  */
+.bill-view-frame {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* display: none; */
+}
+.bill-view-window {
+    width: 420px;
+}
+
+.bill-view-base {
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+}
+.bill-view-base:first-child {
+    padding-bottom: 0;
+}
+
+.bill-view-header {
+    text-align: end;
+}
+.bill-view-header button {
+    border: none;
+    background-color: #fff;
+}
+.bill-view-header img {
+    width: 15px;
+}
+
+.bill-view-table {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 16px;
+    /* font-weight: 500; */
+}
+
+.bill-view-row {
+    padding: 10px 10px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.bill-view-row .screenshot {
+    color: #059999;
+    text-decoration: underline;
+}
+
+.bill-view-row:nth-child(even) {
+    background-color: #d5d5d5;
+}
+
+.bill-view-row p:first-child {
+    color: #023939;
+}
+
+.bill-view-row p:nth-child(2) {
+    padding-left: 10px;
+}
+
+.bill-view-button {
+    display: flex;
+    justify-content: space-evenly;
+}
+.bill-view-button button {
+    height: 40px;
+    width: 120px;
+    background-color: #fff;
+    border-radius: 25px;
+    border: solid 1px #585858;
+    color: #585858;
+    font-family: 'Aleo', serif;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 /* always at last */

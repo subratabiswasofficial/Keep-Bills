@@ -19,6 +19,7 @@ import GlobalAlert from './alerts/GlobalAlert';
 import Loading from './alerts/Loading';
 
 import { loadUser } from './actions/auth';
+import BillView from './pages/BillView';
 
 /* this is mendatory */
 if (localStorage.token) {
@@ -37,7 +38,7 @@ const App = () => {
                 <Navbar />
                 <GlobalAlert />
                 <Loading />
-
+                <BillView />
                 {/* Private Route at React V6 */}
                 <Routes>
                     {/* General */}

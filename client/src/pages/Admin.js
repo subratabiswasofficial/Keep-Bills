@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { v4 as uuid } from 'uuid';
+import { connect } from 'react-redux';
+import { validNumber, semesterView } from '../utils';
+import { showBill, exitBill } from '../actions/billView';
 
-import ViewIcon from '../images/dashboard/001-preview.png';
-import AcceptIcon from '../images/dashboard/003-check.png';
-import DeclineIcon from '../images/dashboard/002-close.png';
 import SearchIcon from '../images/bills/search.png';
 import StudentIcon from '../images/dashboard/user.png';
 import EnergyIcon from '../images/dashboard/plug.png';
 
-import { validNumber } from '../utils';
-
-const Admin = () => {
+const Admin = ({ view, showBill }) => {
     const [previewBillsHistory, setPreviewBillsHistory] = useState([]);
 
     /* exixting bills find */
@@ -26,8 +24,10 @@ const Admin = () => {
     };
 
     useEffect(() => {
+        if (view) return;
+        // if bill view is closed then it will work
         retriveExistingBills();
-    }, []);
+    }, [view]);
 
     const [searchText, setSearchText] = useState('');
 
@@ -53,46 +53,6 @@ const Admin = () => {
         } catch (error) {
             console.log(error);
         }
-    };
-
-    const ActionCell = ({ bid: bidKey }) => {
-        const markStatusHandler = (status) => async () => {
-            setPreviewBillsHistory(
-                previewBillsHistory.map((item) => {
-                    if (bidKey === item.bid) {
-                        return {
-                            ...item,
-                            status
-                        };
-                    } else {
-                        return item;
-                    }
-                })
-            );
-            try {
-                const body = {
-                    bid: bidKey,
-                    status
-                };
-                await axios.post('/api/admin/markbill', body);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        return (
-            <>
-                <button>
-                    <img src={ViewIcon} onClick={markStatusHandler('pending')} alt="View" />
-                </button>
-                <button>
-                    <img src={AcceptIcon} onClick={markStatusHandler('approved')} alt="Accept" />
-                </button>
-                <button>
-                    <img src={DeclineIcon} onClick={markStatusHandler('declined')} alt="Decline" />
-                </button>
-            </>
-        );
     };
 
     return (
@@ -127,16 +87,23 @@ const Admin = () => {
                                 <p>Action</p>
                             </div>
                             <div className="search-rows">
-                                {previewBillsHistory.map(({ bid, screenshot, semester, amount, status, roll }) => (
+                                {previewBillsHistory.map(({ amount, bid, created, department, ref, roll, screenshot, semester, status }) => (
                                     <div className={`data-row ${status}`} key={uuid()}>
                                         <p>{roll ? roll : 'void'}</p>
                                         <p>{amount}</p>
-                                        <p>{semester}</p>
+                                        <p>{semesterView(semester)}</p>
                                         <p className="screenshot">
                                             <a href={screenshot}>Click to download</a>
                                         </p>
                                         <div className="action-cell">
-                                            <ActionCell bid={bid} />
+                                            {/* <ActionCell bid={bid} /> */}
+                                            <button
+                                                onClick={() => {
+                                                    showBill({ scope: 'admin', amount, bid, created, department, ref, roll, screenshot, semester, status });
+                                                }}
+                                            >
+                                                Click to open
+                                            </button>
                                         </div>
                                     </div>
                                 ))}
@@ -149,4 +116,14 @@ const Admin = () => {
     );
 };
 
-export default Admin;
+/* Used states */
+const mapStateToProps = (state) => ({
+    view: state.billView.view
+});
+/* used actions */
+const mapDispatchAction = {
+    showBill,
+    exitBill
+};
+
+export default connect(mapStateToProps, mapDispatchAction)(Admin);
