@@ -1,8 +1,10 @@
-// const { sendEmail } = require('../services/email-sender-mailgun');
+const { sendEmail: sendEmailMailgun } = require('../services/email-sender-mailgun');
 const { sendEmail } = require('../services/email-sender');
-
 const { sendGmail } = require('../services/google');
+
 const { sqlQuery } = require('../db/mysql');
+const emailService = process.env.EMAIL_SERVICE;
+const emailMode = process.env.EMAIL_MODE;
 
 class Session {
     static async sendOtpToEmail(email) {
@@ -10,7 +12,17 @@ class Session {
         const timestamp = Date.now();
         await sqlQuery('DELETE FROM Session WHERE email = ?', [email]);
         await sqlQuery(`INSERT INTO Session VALUES ( ?, ?, ? )`, [email, otp, timestamp]);
-        sendEmail(email, `<p>Your OTP is <strong>${otp}</strong></p>`, 'OTP Varification', true);
+
+        if (emailService === 'gmail') {
+            if (emailMode === 'test') {
+                sendEmail(email, `<p>Your OTP is <strong>${otp}</strong></p>`, 'OTP Varification', true);
+            } else {
+                sendGmail(email, `<p>Your OTP is <strong>${otp}</strong></p>`, 'OTP Varification', true);
+            }
+        } else {
+            sendEmailMailgun(email, `<p>Your OTP is <strong>${otp}</strong></p>`, 'OTP Varification', true);
+        }
+
         console.log('email : ', email, ' otp ', otp);
     }
     static getOtpInRange(min, max) {

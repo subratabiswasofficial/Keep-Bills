@@ -32,7 +32,6 @@ const sendGmail = async (to, html, subject = '', printStatus = false) => {
         const result = await transport.sendMail(mailOptions);
         return result;
     } catch (error) {
-        console.log('Gmail Error');
         console.log(error);
         return error;
     }
