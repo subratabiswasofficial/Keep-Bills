@@ -23,12 +23,6 @@ const Admin = ({ view, showBill }) => {
         }
     };
 
-    useEffect(() => {
-        if (view) return;
-        // if bill view is closed then it will work
-        retriveExistingBills();
-    }, [view]);
-
     const [searchText, setSearchText] = useState('');
 
     const searchOnChangeHandler = (e) => {
@@ -54,6 +48,16 @@ const Admin = ({ view, showBill }) => {
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        if (view) return;
+        // if bill view is closed then it will work
+        if (searchText.length > 0) {
+            onSearchHandler();
+        } else {
+            retriveExistingBills();
+        }
+    }, [view]);
 
     return (
         <section>

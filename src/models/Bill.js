@@ -50,7 +50,7 @@ class Bill {
     }
     static async getBillsByRoll(roll) {
         const { results } = await sqlQuery(
-            `select b.bid, b.amount, b.semester, b.status, s.roll, f.location as screenshot from Bills b 
+            `select b.bid, b.amount, b.semester, b.status, s.roll, b.ref, s.department, b.created, f.location as screenshot from Bills b 
         left join Students s
         on b.uid = s.uid
         left join Files f

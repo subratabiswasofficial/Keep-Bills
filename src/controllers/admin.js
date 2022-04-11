@@ -3,7 +3,6 @@ const { Bill } = require('../models');
 const getBillsByRoll = async (req, res) => {
     try {
         const { roll } = req.body;
-        console.log({ roll });
         const result = await Bill.getBillsByRoll(roll);
         return res.status(200).json(result);
     } catch (error) {
