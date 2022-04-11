@@ -31,8 +31,8 @@ class Student {
     }
     static async getProfileByUid(uid) {
         const { results } = await sqlQuery(
-            `select s.uid, s.name, s.roll, s.department, s.semester, f.location as avatar from ( select * from students where uid = ? ) s
-        left join files f
+            `select s.uid, s.name, s.roll, s.department, s.semester, f.location as avatar from ( select * from Students where uid = ? ) s
+        left join Files f
         on s.avatarId = f.fid`,
             [uid]
         );

@@ -23,8 +23,8 @@ class Bill {
     }
     static async getBillsByUid(uid) {
         const { results } = await sqlQuery(
-            `select b.bid, b.amount, b.semester, b.ref, b.created, b.status, f.location as screenshot from ( select * from bills where uid = ? ) b
-        left join files f
+            `select b.bid, b.amount, b.semester, b.ref, b.created, b.status, f.location as screenshot from ( select * from Bills where uid = ? ) b
+        left join Files f
         on b.fid = f.fid
         order by b.semester desc`,
             [uid]
@@ -50,10 +50,10 @@ class Bill {
     }
     static async getBillsByRoll(roll) {
         const { results } = await sqlQuery(
-            `select b.bid, b.amount, b.semester, b.status, s.roll, f.location as screenshot from bills b 
-        left join students s
+            `select b.bid, b.amount, b.semester, b.status, s.roll, f.location as screenshot from Bills b 
+        left join Students s
         on b.uid = s.uid
-        left join files f
+        left join Files f
         on f.fid = b.fid
         having s.roll = ?
         order by semester desc`,
@@ -63,8 +63,8 @@ class Bill {
     }
     static async getBills() {
         const { results } = await sqlQuery(
-            `select b.bid, b.amount, b.semester, b.status, s.roll, b.ref, s.department, b.created, f.location as screenshot from bills b 
-        left join students s
+            `select b.bid, b.amount, b.semester, b.status, s.roll, b.ref, s.department, b.created, f.location as screenshot from Bills b 
+        left join Students s
         on b.uid = s.uid
         left join files f
         on f.fid = b.fid`
