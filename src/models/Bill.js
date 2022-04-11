@@ -66,7 +66,7 @@ class Bill {
             `select b.bid, b.amount, b.semester, b.status, s.roll, b.ref, s.department, b.created, f.location as screenshot from Bills b 
         left join Students s
         on b.uid = s.uid
-        left join files f
+        left join Files f
         on f.fid = b.fid`
         );
         return results;
