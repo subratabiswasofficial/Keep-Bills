@@ -32,19 +32,3 @@ const varifyOTP = async (req, res) => {
 };
 
 module.exports = { requestOTP, varifyOTP };
-
-/*
-
-admin
-{
-    "email": "subrataemail1999@gmail.com",
-    "otp": 275957
-}
-
-student
-{
-    "email": "subratabiswasofficial@gmail.com",
-    "otp": 554760
-}
-
-*/

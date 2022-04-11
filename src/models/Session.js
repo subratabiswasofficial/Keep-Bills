@@ -32,7 +32,7 @@ class Session {
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-    static async varifyOtp(email, otp, timeLimit = 100) {
+    static async varifyOtp(email, otp, timeLimit = 10) {
         const { results = [] } = await sqlQuery(`SELECT otp, created FROM Session WHERE email = ?`, [email]);
         const sentOtp = results[0].otp;
         const timestamp = results[0].created;
@@ -40,11 +40,18 @@ class Session {
         if (timeLeft <= 0) {
             return { matched: false, valid: false };
         }
+        /* only for testing */
         if (sentOtp == otp || otp == 111111) {
             return { matched: true, valid: true };
         }
         return { matched: false, valid: false };
     }
 }
-
+/*
+create table Session(
+	email varchar(100) primary key,
+    OTP int,
+    created bigint
+);
+*/
 module.exports = Session;

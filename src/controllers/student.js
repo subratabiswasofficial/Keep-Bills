@@ -5,18 +5,14 @@ const createOrUpdateProfile = async (req, res) => {
         const { name, roll, department, semester } = req.body;
         const uid = req.uid;
         let avatarId = null;
-
         if (req.files != null) {
             const avatar = req.files.avatar;
             const file = new AwsFile(avatar);
             const { fid } = await file.save();
             avatarId = fid;
         }
-
         const student = new Student({ uid, name, roll, department, semester, avatarId });
         const result = await student.saveOrUpdate();
-
-        console.log(result);
         return res.status(201).send(result);
     } catch (error) {
         console.log(error);

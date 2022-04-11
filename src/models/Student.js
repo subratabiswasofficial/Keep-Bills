@@ -48,21 +48,16 @@ class Student {
 module.exports = Student;
 
 /*
--- create table Students(
--- 	   uid varchar(50),
---     name varchar(100) not null,
---     roll bigint not null,
---     department varchar(100),
---     semester int default 1,
---     avatarId varchar(50),
---     primary key (uid),
---     foreign key (uid)
---     references Users(uid)
---     on delete cascade
--- );
-
--- select s.uid, s.name, s.roll, s.department, s.semester, f.location as avatar from ( select * from students where uid = '9383166a-1218-415b-b06c-a71dfe98c351' ) s
--- left join files f
--- on s.avatarId = f.fid;
-
+create table Students(
+    uid varchar(50),
+    name varchar(100) not null,
+    roll bigint not null unique,
+    department varchar(100),
+    semester int default 1,
+    avatarId varchar(50),
+    primary key (uid),
+    foreign key (uid)
+    references Users(uid)
+    on delete cascade
+);
 */

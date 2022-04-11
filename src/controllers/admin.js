@@ -8,7 +8,7 @@ const getBillsByRoll = async (req, res) => {
         return res.status(200).json(result);
     } catch (error) {
         console.log(error);
-        return res.status(500).send('Internal Server Error');
+        return res.status(500).send('Internal server error');
     }
 };
 
@@ -25,8 +25,8 @@ const getBills = async (req, res) => {
 const markBill = async (req, res) => {
     try {
         const { bid, status } = req.body;
-        const result = await Bill.markBillByBid(bid, status);
-        return res.status(200).json(result);
+        await Bill.markBillByBid(bid, status);
+        return res.status(200).json('Bill Marked');
     } catch (error) {
         console.log(error);
         return res.status(500).send('Internal Server Error');

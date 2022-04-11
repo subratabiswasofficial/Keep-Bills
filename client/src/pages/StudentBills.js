@@ -7,7 +7,7 @@ import UploadIcon from '../images/bills/cloud-computing.png';
 import HistoryIcon from '../images/bills/invoice.png';
 import SearchIcon from '../images/bills/search.png';
 
-import { validNumber } from '../utils';
+import { validNumber, semesterView } from '../utils';
 import { alert } from '../actions/alert';
 import { showLoading, hideLoading } from '../actions/loading';
 import { showBill } from '../actions/billView';
@@ -68,7 +68,7 @@ const BillHistory = ({ view, showBill }) => {
                     <div className={`data-row ${status}`} key={uuid()}>
                         <p>{created.split('T')[0]}</p>
                         <p>{amount}</p>
-                        <p>{semester}</p>
+                        <p>{semesterView(semester)}</p>
                         <p className="screenshot">
                             <a href={screenshot}>Click to download</a>
                         </p>

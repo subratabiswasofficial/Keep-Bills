@@ -72,6 +72,7 @@ create table Files(
 */
 
 /*
+s3 upload response
 {
 [0]   ETag: '"5405d77c51fb46a0cbf26cb96fe4da4d"',
 [0]   Location: 'https://keep-bills.s3.amazonaws.com/avatar.png',

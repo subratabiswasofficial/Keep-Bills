@@ -27,11 +27,11 @@ class Users {
     }
 }
 /*
-    create table Users( 
-        uid varchar(50),
-        email varchar(100),
-        type varchar(20) default 'student',
-        primary key( uid, email )
-    );
+create table Users( 
+    uid varchar(50),
+    email varchar(100),
+    type varchar(20) default 'student',
+    primary key( uid, email )
+);
 */
 module.exports = Users;

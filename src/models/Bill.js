@@ -33,7 +33,6 @@ class Bill {
     }
     static async deleteExistingBillByUidAndSemester(uid, semester) {
         const { results } = await sqlQuery(`SELECT * FROM Bills WHERE uid = ? AND semester = ?`, [uid, Number(semester)]);
-        console.log(results);
         if (results.length > 0) {
             const { bid, fid } = results[0];
             await AwsFile.deleteFileByFid(fid);
@@ -41,7 +40,13 @@ class Bill {
         }
     }
     static async deleteBillByUidAndBid(uid, bid) {
-        await sqlQuery(`DELETE FROM Bills WHERE bid = ? AND uid = ?`, [bid, uid]);
+        /* delete aws file before delete */
+        const { results } = await sqlQuery(`SELECT * FROM Bills WHERE bid = ? AND uid = ?`, [bid, uid]);
+        if (results.length > 0) {
+            const { bid, fid } = results[0];
+            await AwsFile.deleteFileByFid(fid);
+            await sqlQuery(`DELETE FROM Bills WHERE bid = ? AND uid = ?`, [bid, uid]);
+        }
     }
     static async getBillsByRoll(roll) {
         const { results } = await sqlQuery(
@@ -73,24 +78,6 @@ class Bill {
 }
 
 /*
-
-select b.amount, b.semester, b.ref, b.created, b.status, f.location from ( select * from bills where uid = '9383166a-1218-415b-b06c-a71dfe98c351' ) b
-left join files f
-on b.fid = f.fid;
-
-select b.bid, b.amount, b.semester, s.roll, f.location from bills b 
-left join students s
-on b.uid = s.uid
-left join files f
-on f.fid = b.fid;
-
-select b.bid, b.amount, b.semester, s.roll, f.location from bills b 
-left join students s
-on b.uid = s.uid
-left join files f
-on f.fid = b.fid
-having s.roll = ?;
-
 create table Bills(
     bid varchar(50),
     uid varchar(50) not null,
