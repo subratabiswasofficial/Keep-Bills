@@ -11,13 +11,22 @@ import EnergyIcon from '../images/dashboard/plug.png';
 
 const Admin = ({ view, showBill }) => {
     const [previewBillsHistory, setPreviewBillsHistory] = useState([]);
-
+    const [billPage, setBillPage] = useState(true); // true if student bills, false if energy bills
+    const [energyUsage, setEnergyUsage] = useState('VOID');
     /* exixting bills find */
     const retriveExistingBills = async () => {
         try {
             const response = await axios.get('/api/admin/bills');
             const bills = response.data;
             setPreviewBillsHistory(bills);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const fetchEnergyUsage = async () => {
+        try {
+            const response = await axios.get('/api/----');
         } catch (error) {
             console.log(error);
         }
@@ -56,6 +65,7 @@ const Admin = ({ view, showBill }) => {
             onSearchHandler();
         } else {
             retriveExistingBills();
+            console.log('fetch energy consump');
         }
     }, [view]);
 
@@ -66,53 +76,88 @@ const Admin = ({ view, showBill }) => {
                     <div className="table-frame">
                         <div className="page-nav">
                             <div className="progress-bar"></div>
-                            <div className="bill-button big-button active-big-button">
+                            <div
+                                className={`bill-button big-button ${billPage ? 'active-big-button' : ''}`}
+                                onClick={() => {
+                                    console.log('student bills');
+                                    setBillPage(true);
+                                }}
+                            >
                                 <img src={StudentIcon} alt="Student Bill" />
                             </div>
-                            <div className="energy-button big-button">
+                            <div
+                                className={`energy-button big-button ${!billPage ? 'active-big-button' : ''}`}
+                                onClick={() => {
+                                    console.log('energy');
+                                    setBillPage(false);
+                                }}
+                            >
                                 <img src={EnergyIcon} alt="Energy" />
                             </div>
                         </div>
-                        <div className="table">
-                            <div className="search-bar">
-                                <div className="search-area">
-                                    <input type="text" value="ROLL NUMBER" disabled />
-                                    <input onChange={searchOnChangeHandler} value={searchText} type="text" placeholder="1810110XXXX" />
-                                    <div onClick={onSearchHandler} className="search-button">
-                                        <img src={SearchIcon} alt="Search" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="table-head">
-                                <p>Roll no.</p>
-                                <p>Amount</p>
-                                <p>Semester</p>
-                                <p>Document</p>
-                                <p>Action</p>
-                            </div>
-                            <div className="search-rows">
-                                {previewBillsHistory.map(({ amount, bid, created, department, ref, roll, screenshot, semester, status }) => (
-                                    <div className={`data-row ${status}`} key={uuid()}>
-                                        <p>{roll ? roll : 'void'}</p>
-                                        <p>{amount}</p>
-                                        <p>{semesterView(semester)}</p>
-                                        <p className="screenshot">
-                                            <a href={screenshot}>Click to download</a>
-                                        </p>
-                                        <div className="action-cell">
-                                            {/* <ActionCell bid={bid} /> */}
-                                            <button
-                                                onClick={() => {
-                                                    showBill({ scope: 'admin', amount, bid, created, department, ref, roll, screenshot, semester, status });
-                                                }}
-                                            >
-                                                Click to open
-                                            </button>
+                        {billPage && (
+                            <>
+                                <div className="table">
+                                    <div className="search-bar">
+                                        <div className="search-area">
+                                            <input type="text" value="ROLL NUMBER" disabled />
+                                            <input onChange={searchOnChangeHandler} value={searchText} type="text" placeholder="1810110XXXX" />
+                                            <div onClick={onSearchHandler} className="search-button">
+                                                <img src={SearchIcon} alt="Search" />
+                                            </div>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-                        </div>
+
+                                    <div className="table-head">
+                                        <p>Roll no.</p>
+                                        <p>Amount</p>
+                                        <p>Semester</p>
+                                        <p>Document</p>
+                                        <p>Action</p>
+                                    </div>
+                                    <div className="search-rows">
+                                        {previewBillsHistory.map(({ amount, bid, created, department, ref, roll, screenshot, semester, status }) => (
+                                            <div className={`data-row ${status}`} key={uuid()}>
+                                                <p>{roll ? roll : 'void'}</p>
+                                                <p>{amount}</p>
+                                                <p>{semesterView(semester)}</p>
+                                                <p className="screenshot">
+                                                    <a href={screenshot}>Click to download</a>
+                                                </p>
+                                                <div className="action-cell">
+                                                    {/* <ActionCell bid={bid} /> */}
+                                                    <button
+                                                        onClick={() => {
+                                                            showBill({ scope: 'admin', amount, bid, created, department, ref, roll, screenshot, semester, status });
+                                                        }}
+                                                    >
+                                                        Click to open
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </>
+                        )}
+                        {!billPage && (
+                            <>
+                                <div className="table-energy">
+                                    <div className="table-head-energy">
+                                        <p>Hostle no.</p>
+                                        <p>Usage (Units)</p>
+                                        <p>Status</p>
+                                    </div>
+                                    <div className="search-rows-energy">
+                                        <div className={`data-row-energy`} key={uuid()}>
+                                            <p>1st</p>
+                                            <p>{energyUsage}</p>
+                                            <p style={{ color: 'orangered', fontWeight: '600' }}>WARN</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
