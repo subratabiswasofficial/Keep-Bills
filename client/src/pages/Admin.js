@@ -26,7 +26,9 @@ const Admin = ({ view, showBill }) => {
 
     const fetchEnergyUsage = async () => {
         try {
-            const response = await axios.get('/api/----');
+            const response = await axios.get('/api/logger/data');
+            const { usage } = response.data;
+            setEnergyUsage(usage);
         } catch (error) {
             console.log(error);
         }
@@ -65,9 +67,13 @@ const Admin = ({ view, showBill }) => {
             onSearchHandler();
         } else {
             retriveExistingBills();
-            console.log('fetch energy consump');
         }
     }, [view]);
+
+    useEffect(() => {
+        if (billPage) return;
+        fetchEnergyUsage();
+    }, [billPage]);
 
     return (
         <section>
@@ -79,7 +85,6 @@ const Admin = ({ view, showBill }) => {
                             <div
                                 className={`bill-button big-button ${billPage ? 'active-big-button' : ''}`}
                                 onClick={() => {
-                                    console.log('student bills');
                                     setBillPage(true);
                                 }}
                             >
@@ -88,7 +93,6 @@ const Admin = ({ view, showBill }) => {
                             <div
                                 className={`energy-button big-button ${!billPage ? 'active-big-button' : ''}`}
                                 onClick={() => {
-                                    console.log('energy');
                                     setBillPage(false);
                                 }}
                             >
