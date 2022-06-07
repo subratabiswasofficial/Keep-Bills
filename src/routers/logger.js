@@ -12,7 +12,7 @@ needed apis
 router.get('/data', auth.admin, async (req, res) => {
     try {
         const { results } = await sqlQuery('SELECT sum(amount) AS total FROM Usages GROUP BY hostle HAVING hostle = 1');
-        const usage = results.length == 0 ? 'VOID' : results[0].total;
+        const usage = results.length == 0 ? 'VOID' : Math.round((results[0].total / 3200) * 10000) / 10000;
         return res.json({ usage });
     } catch (error) {
         console.log(error);
